@@ -1,0 +1,59 @@
+name: "Vault pull request trigger"
+
+on:
+  push:
+    paths:
+      - "shared/vault/**"
+    branches:
+      - master
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: "auth"
+        name: "Setup GC Auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.GCP_VAULT_CREDENTIALS }}"
+
+      - name: Set terraform log level
+        run: export TF_LOG=DEBUG
+
+      # Setup gcloud CLI
+      - name: "Setup GC SDK/CLI"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: terraform -chdir=shared/vault init
+
+      # Checks that all Terraform configuration files adhere to a canonical format
+      # - name: Terraform Format
+      #   run: terraform fmt -check
+
+      # Generates an execution plan for Terraform
+      - name: Terraform  Plan
+        run: terraform -chdir=shared/vault plan -input=false
+
+      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud".
+      # See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+      - name: Terraform Apply
+        run: |
+          terraform -chdir=shared/vault apply -input=false -auto-approve
+
+    ########## TO DESTROY ##########
+    # - name: Terraform  Validate
+    #   run: terraform -chdir=shared/vault validate
+
+    # - name: Terraform Destroy
+    #   run: |
+    #    terraform -chdir=shared/vault apply -input=false -destroy -auto-approve
