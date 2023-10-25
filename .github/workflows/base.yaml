@@ -7,7 +7,7 @@ on:
         required: true
         type: string
     secrets:
-      # This is holding the content of mailboc-gcp-token.json
+      # This is holding the content of mailbox-gcp-token.json
       gcp_credentials:
         required: true
       pg_username:
