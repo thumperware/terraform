@@ -3,7 +3,7 @@ name: "Mailbox pull request trigger"
 on:
   push:
     paths:
-      - "staging/services/mailbox/**"
+      - "staging/wms/mailbox/**"
     branches:
       - main
   pull_request:
