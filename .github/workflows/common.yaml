@@ -5,7 +5,7 @@ on:
     paths:
       - "staging/wms/common/**"
     branches:
-      - main
+      - master
   pull_request:
 jobs:
   the_job:
