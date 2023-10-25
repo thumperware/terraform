@@ -11,9 +11,9 @@ on:
       gcp_credentials:
         required: true
       pg_username:
-        required: true
+        required: false
       pg_password:
-        required: true
+        required: false
 
 jobs:
   terraform:
