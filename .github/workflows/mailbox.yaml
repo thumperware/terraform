@@ -1,4 +1,4 @@
-name: 'Mailbox pull request trigger'
+name: "Mailbox pull request trigger"
 
 on:
   push:
@@ -15,7 +15,6 @@ jobs:
       tf_workspace: staging/services/mailbox
     secrets:
       # This is holding the content of mailboc-gcp-token.json
-      gcp_credentials: ${{ secrets.GCP_CREDENTIALS }}
-      pg_username: ${{ secrets.PG_USERNAME }}
-      pg_password: ${{ secrets.PG_PASSWORD }}
-    
+      gcp_credentials: ${{ vars.GCP_CREDENTIALS }}
+      pg_username: ${{ vars.PG_USERNAME }}
+      pg_password: ${{ vars.PG_PASSWORD }}
