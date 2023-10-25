@@ -1,2 +1,2 @@
-project_id = "<the_project_id>"
+project_id = "hoomanfr-domain"
 region  = "us-west1"
