@@ -3,7 +3,6 @@ provider "google" {
   region  = var.region
 }
 
-
 module "mailbox_srv"{
   source="../shared"
 
