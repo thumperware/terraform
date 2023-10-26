@@ -12,7 +12,7 @@ jobs:
   the_job:
     uses: ./.github/workflows/base.yaml
     with:
-      tf_workspace: staging/services/mailbox
+      tf_workspace: staging/wms/mailbox
     secrets:
       # This is holding the content of mailboc-gcp-token.json
       gcp_credentials: ${{ vars.GCP_CREDENTIALS }}
