@@ -10,7 +10,6 @@ locals {
     "roles/storage.admin",
     "roles/storage.objectAdmin",
     "roles/cloudsql.client",
-    "roles/artifactregistry.admin",
     "roles/cloudtrace.agent",
     "roles/logging.logWriter",
     "roles/monitoring.metricWriter",
