@@ -3,6 +3,8 @@
 resource "google_container_cluster" "primary" {
   name     = "${var.project_id}-gke"
   location = var.zone
+  monitoring_service = "monitoring.googleapis.com/kubernetes"
+  logging_service = "logging.googleapis.com/kubernetes"
   
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
