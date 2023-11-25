@@ -2,33 +2,28 @@ resource "google_service_account" "wms-sa" {
   account_id   = "wms-sa"
   display_name = "WMS Service Account"
 }
+
+locals {
+  wms-sa-roles = [
+    "roles/artifactregistry.admin",
+    "roles/iam.serviceAccountTokenCreator",
+    "roles/storage.admin",
+    "roles/storage.objectAdmin",
+    "roles/cloudsql.client",
+    "roles/artifactregistry.admin",
+    "roles/cloundtrace.agent",
+    "roles/logging.logWriter",
+    "roles/monitoring.metricWriter",
+    "roles/monitoring.viewer",
+    "roles/stackdriver.resourceMetadata.writer"
+  ]
+}
+
+
 # https://cloud.google.com/iam/docs/understanding-roles
-resource "google_project_iam_member" "wms-sa-acr-role" {
+resource "google_project_iam_member" "wms-sa-iam-member" {
   project = var.project_id
-  role = "roles/artifactregistry.admin"
-  member = "serviceAccount:${google_service_account.wms-sa.email}"
-}
-
-resource "google_project_iam_member" "wms-sa-token-creator-role" {
-  project = var.project_id
-  role = "roles/iam.serviceAccountTokenCreator"
-  member = "serviceAccount:${google_service_account.wms-sa.email}"
-}
-
-resource "google_project_iam_member" "wms-sa-storage-admin-role" {
-  project = var.project_id
-  role = "roles/storage.admin"
-  member = "serviceAccount:${google_service_account.wms-sa.email}"
-}
-
-resource "google_project_iam_member" "wms-sa-storage-object-admin-role" {
-  project = var.project_id
-  role = "roles/storage.objectAdmin"
-  member = "serviceAccount:${google_service_account.wms-sa.email}"
-}
-
-resource "google_project_iam_member" "wms-sa-sql-client-role" {
-  project = var.project_id
-  role = "roles/cloudsql.client"
+  count = length(local.wms-sa-roles)
+  role = element(local.wms-sa-roles, count.index)
   member = "serviceAccount:${google_service_account.wms-sa.email}"
 }
