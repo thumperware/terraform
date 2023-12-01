@@ -4,6 +4,6 @@ resource "helm_release" "nats_server"{
     chart = "nats"
     namespace = "default"
     values = [
-        "${file("values.yaml")}"
+        "${file("nats/values.yaml")}"
     ]
 }
