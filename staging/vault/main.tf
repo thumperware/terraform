@@ -10,6 +10,7 @@ module "vault" {
   region         = var.region
   kms_keyring    = google_kms_key_ring.vault_keyring.name
   kms_crypto_key = google_kms_crypto_key.vault_crypto_key.name
+  depends_on = [ google_project_service.gcp_apis ]
 }
 
 resource "google_project_service" "gcp_apis" {
