@@ -1,0 +1,17 @@
+name: 'Common pull request trigger'
+
+on:
+  push:
+    paths:
+      - 'staging/infrastructure/**'
+    branches:
+      - na
+  pull_request:
+
+jobs:
+  the_job:
+    uses: ./.github/workflows/base.yaml
+    with:
+      tf_workspace: staging/infrastructure
+    secrets:
+      gcp_credentials: ${{ vars.GCP_CREDENTIALS }}

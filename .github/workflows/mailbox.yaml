@@ -1,11 +1,11 @@
-name: "Mailbox pull request trigger"
+name: 'Mailbox pull request trigger'
 
 on:
   push:
     paths:
-      - "staging/wms/mailbox/**"
+      - 'staging/wms/mailbox/**'
     branches:
-      - master
+      - na
   pull_request:
 
 jobs:
