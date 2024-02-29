@@ -11,3 +11,13 @@ module "vault" {
   kms_keyring    = google_kms_key_ring.vault_keyring.name
   kms_crypto_key = google_kms_crypto_key.vault_crypto_key.name
 }
+
+resource "google_project_service" "gcp_apis" {
+  for_each = toset(["storage.googleapis.com",
+    "compute.googleapis.com",])
+
+  project = var.project_id
+  service = each.key
+
+  disable_dependent_services = true
+}
