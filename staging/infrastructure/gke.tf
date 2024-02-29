@@ -1,3 +1,4 @@
+# GKE
 resource "google_container_cluster" "primary" {
   name     = "${var.project_id}-gke"
   location = var.zone
