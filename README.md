@@ -11,10 +11,10 @@ NOTE: This account is different than the service account defined in the service_
 ```
 
 Enable the following GCP services:
-- Bucket service
-- Artifact registry service
-- compute engine api
-- Kubernetes Engine
-- Cloud Resource Manager API
-- Service Networking API
-- Cloud SQL Admin API
+- Cloud storage(storage.googleapis.com)
+- Artifact registry service(artifactregistry.googleapis.com)
+- compute engine api(compute.googleapis.com)
+- Kubernetes Engine(container.googleapis.com)
+- Cloud Resource Manager API(cloudresourcemanager.googleapis.com)
+- Service Networking API(servicenetworking.googleapis.com)
+- Cloud SQL Admin API(sqladmin.googleapis.com)

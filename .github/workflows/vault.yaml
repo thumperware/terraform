@@ -1,9 +1,9 @@
-name: "Vault pull request trigger"
+name: 'Vault pull request trigger'
 
 on:
   push:
     paths:
-      - "shared/vault/**"
+      - 'staging/vault/**'
     branches:
       - master
 
@@ -15,18 +15,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - id: "auth"
-        name: "Setup GC Auth"
-        uses: "google-github-actions/auth@v1"
+      - id: 'auth'
+        name: 'Setup GC Auth'
+        uses: 'google-github-actions/auth@v1'
         with:
-          credentials_json: "${{ vars.GCP_VAULT_CREDENTIALS }}"
+          credentials_json: '${{ vars.GCP_VAULT_CREDENTIALS }}'
 
       - name: Set terraform log level
         run: export TF_LOG=DEBUG
 
       # Setup gcloud CLI
-      - name: "Setup GC SDK/CLI"
-        uses: "google-github-actions/setup-gcloud@v1"
+      - name: 'Setup GC SDK/CLI'
+        uses: 'google-github-actions/setup-gcloud@v1'
 
       # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
       - name: Setup Terraform
