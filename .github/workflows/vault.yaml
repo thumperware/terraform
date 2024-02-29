@@ -5,7 +5,7 @@ on:
     paths:
       - 'staging/vault/**'
     branches:
-      - na
+      - master
 
 jobs:
   terraform:
