@@ -34,7 +34,7 @@ jobs:
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
-        run: terraform -chdir=shared/vault init
+        run: terraform -chdir=staging/vault init
 
       # Checks that all Terraform configuration files adhere to a canonical format
       # - name: Terraform Format
@@ -42,18 +42,18 @@ jobs:
 
       # Generates an execution plan for Terraform
       - name: Terraform  Plan
-        run: terraform -chdir=shared/vault plan -input=false
+        run: terraform -chdir=staging/vault plan -input=false
 
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud".
       # See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
       - name: Terraform Apply
         run: |
-          terraform -chdir=shared/vault apply -input=false -auto-approve
+          terraform -chdir=staging/vault apply -input=false -auto-approve
 
     ########## TO DESTROY ##########
     # - name: Terraform  Validate
-    #   run: terraform -chdir=shared/vault validate
+    #   run: terraform -chdir=staging/vault validate
 
     # - name: Terraform Destroy
     #   run: |
-    #    terraform -chdir=shared/vault apply -input=false -destroy -auto-approve
+    #    terraform -chdir=staging/vault apply -input=false -destroy -auto-approve
