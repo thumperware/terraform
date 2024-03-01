@@ -1,5 +1,5 @@
 resource "google_service_account" "sa" {
-  account_id   = "terraform-sa"
+  account_id   = "infrastructure-sa"
   display_name = "Service Account"
 }
 
