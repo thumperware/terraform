@@ -12,13 +12,8 @@ resource "kubernetes_namespace" "istio-ingress" {
   }
 }
 
-resource "kubernetes_namespace" "istio-system" {
-  metadata {
-    name = "istio-system"
-  }
-}
-
 resource "helm_release" "istio-base" {
+  provider         = helm.central
   repository       = local.istio_charts_url
   chart            = "base"
   name             = "istio-base"
@@ -28,6 +23,7 @@ resource "helm_release" "istio-base" {
 }
 
 resource "helm_release" "istiod" {
+  provider         = helm.central
   repository       = local.istio_charts_url
   chart            = "istiod"
   name             = "istiod"
@@ -38,6 +34,7 @@ resource "helm_release" "istiod" {
 }
 
 resource "helm_release" "istio-ingress" {
+  provider   = helm.central
   repository = local.istio_charts_url
   chart      = "gateway"
   name       = "istio-ingress"
