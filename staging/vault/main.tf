@@ -14,11 +14,7 @@ module "vault" {
 }
 
 resource "google_project_service" "gcp_cloud_resource_manager_api" {
-  for_each = toset([
-    "cloudresourcemanager.googleapis.com",
-    "storage.googleapis.com",
-    "compute.googleapis.com",
-    "cloudkms.googleapis.com"])
+  for_each = toset(["cloudresourcemanager.googleapis.com"])
 
   project = var.project_id
   service = each.key
