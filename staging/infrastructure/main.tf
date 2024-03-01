@@ -5,6 +5,7 @@ provider "google" {
 
 data "google_client_config" "current" {}
 
+# Infrastructure
 provider "helm" {
   kubernetes {
     host                   = google_container_cluster.primary.endpoint
