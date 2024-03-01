@@ -13,14 +13,20 @@ resource "kubernetes_namespace" "istio-ingress" {
   }
 }
 
+resource "kubernetes_namespace" "istio_system" {
+  provider = kubernetes.central
+  metadata {
+    name = "istio-system"
+  }
+}
+
 resource "helm_release" "istio-base" {
   provider         = helm.central
   repository       = local.istio_charts_url
   chart            = "base"
   name             = "istio-base"
-  namespace        = "istio-system"
+  namespace        = kubernetes_namespace.istio_system.metadata.0.name
   version          = "1.20.2"
-  create_namespace = true
 }
 
 resource "helm_release" "istiod" {
@@ -28,8 +34,7 @@ resource "helm_release" "istiod" {
   repository       = local.istio_charts_url
   chart            = "istiod"
   name             = "istiod"
-  namespace        = "istio-system"
-  create_namespace = true
+  namespace        = kubernetes_namespace.istio_system.metadata.0.name
   version          = "1.20.2"
   depends_on       = [helm_release.istio-base]
 }
@@ -39,7 +44,7 @@ resource "helm_release" "istio-ingress" {
   repository = local.istio_charts_url
   chart      = "gateway"
   name       = "istio-ingress"
-  namespace  = "istio-ingress"
+  namespace  = kubernetes_namespace.istio-ingress.metadata.0.name
   version    = "1.20.2"
   depends_on = [helm_release.istiod]
 }
