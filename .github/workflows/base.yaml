@@ -49,7 +49,7 @@ jobs:
       #   run: terraform fmt -check
 
       # Generates an execution plan for Terraform
-      - name: Terraform  Plan with pg
+      - name: Terraform Plan
         env:
           pg_username: ${{ secrets.pg_username }}
           pg_password: ${{ secrets.pg_password }}
@@ -57,7 +57,7 @@ jobs:
         run: terraform -chdir=${{ inputs.tf_workspace }} plan -input=false -var="pg_username=${{ secrets.pg_username }}" -var="pg_password=${{ secrets.pg_password }}"
 
       # Generates an execution plan for Terraform
-      - name: Terraform  Plan without pg
+      - name: Terraform  Plan
         env:
           pg_username: ${{ secrets.pg_username }}
           pg_password: ${{ secrets.pg_password }}
@@ -67,8 +67,20 @@ jobs:
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud".
       # See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
       - name: Terraform Apply
-        run: |
-          terraform -chdir=${{ inputs.tf_workspace }} apply -input=false -var="pg_username=${{ secrets.pg_username }}" -var="pg_password=${{ secrets.pg_password }}" -auto-approve
+        env:
+          pg_username: ${{ secrets.pg_username }}
+          pg_password: ${{ secrets.pg_password }}
+        if: ${{ env.pg_username != null && env.pg_password != null }}
+        run: terraform -chdir=${{ inputs.tf_workspace }} apply -input=false -var="pg_username=${{ secrets.pg_username }}" -var="pg_password=${{ secrets.pg_password }}" -auto-approve
+
+      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud".
+      # See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+      - name: Terraform Apply
+        env:
+          pg_username: ${{ secrets.pg_username }}
+          pg_password: ${{ secrets.pg_password }}
+        if: ${{ env.pg_username == null && env.pg_password == null }}
+        run: terraform -chdir=${{ inputs.tf_workspace }} apply -input=false -auto-approve
 
     ########## TO DESTROY ##########
     # - name: Terraform  Validate
