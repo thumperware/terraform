@@ -15,5 +15,3 @@ jobs:
       tf_workspace: staging/infrastructure
     secrets:
       gcp_credentials: ${{ vars.GCP_CREDENTIALS }}
-      pg_username: 'NA'
-      pg_password: 'NA'
