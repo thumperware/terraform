@@ -1,18 +1,18 @@
-name: 'Vault pull request trigger'
+name: 'Terraform pull request trigger'
 
 on:
   push:
     paths:
-      - 'staging/vault/**'
+      - 'staging/terraform/**'
     branches:
-      - na
+      - master
   pull_request:
 
 jobs:
   the_job:
     uses: ./.github/workflows/base.yaml
     with:
-      tf_workspace: staging/vault
+      tf_workspace: staging/terraform
     secrets:
       # This is holding the content of mailboc-gcp-token.json
       gcp_credentials: ${{ vars.GCP_CREDENTIALS }}

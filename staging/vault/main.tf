@@ -10,27 +10,4 @@ module "vault" {
   region         = var.region
   kms_keyring    = google_kms_key_ring.vault_keyring.name
   kms_crypto_key = google_kms_crypto_key.vault_crypto_key.name
-  depends_on = [ google_project_service.gcp_apis ]
-}
-
-resource "google_project_service" "gcp_cloud_resource_manager_api" {
-  for_each = toset(["cloudresourcemanager.googleapis.com"])
-
-  project = var.project_id
-  service = each.key
-
-  disable_dependent_services = true
-}
-
-resource "google_project_service" "gcp_apis" {
-  for_each = toset([
-    "storage.googleapis.com",
-    "compute.googleapis.com",
-    "cloudkms.googleapis.com"])
-
-  project = var.project_id
-  service = each.key
-
-  disable_dependent_services = true
-  depends_on = [ google_project_service.gcp_cloud_resource_manager_api ]
 }
