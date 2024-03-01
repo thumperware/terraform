@@ -9,7 +9,7 @@ variable "region" {
 }
 
 variable "zone" {
-  type        = string
+  type        = list(string)
   description = "The Google project ID"
 }
 

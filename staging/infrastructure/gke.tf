@@ -1,7 +1,7 @@
 # GKE
 resource "google_container_cluster" "primary" {
   name     = "${var.project_id}-gke"
-  location = var.zone
+  location = var.region
   monitoring_service = "monitoring.googleapis.com/kubernetes"
   logging_service = "logging.googleapis.com/kubernetes"
   
@@ -22,7 +22,8 @@ resource "google_container_cluster" "primary" {
 
 resource "google_container_node_pool" "primary_nodes" {
   name       = google_container_cluster.primary.name
-  location   = var.zone
+  location   = var.region
+  node_locations = var.zone
   cluster    = google_container_cluster.primary.name
   node_count = var.gke_num_nodes
   
@@ -40,7 +41,7 @@ resource "google_container_node_pool" "primary_nodes" {
     }
 
     # preemptible  = true
-    machine_type = "n1-standard-1"
+    machine_type = "n2-standard-4"
     disk_size_gb = 50
     tags         = ["gke-node", "${var.project_id}-gke"]
     metadata = {

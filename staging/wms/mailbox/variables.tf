@@ -3,17 +3,7 @@ variable "project_id" {
   description = "The Google project ID"
 }
 
-variable "project_name" {
-  type        = string
-  description = "The Google project name"
-}
-
 variable "region" {
-  type        = string
-  description = "The Google project ID"
-}
-
-variable "zone" {
   type        = string
   description = "The Google project ID"
 }
