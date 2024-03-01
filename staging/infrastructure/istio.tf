@@ -18,7 +18,7 @@ resource "helm_release" "istio-base" {
   repository       = local.istio_charts_url
   chart            = "base"
   name             = "istio-base"
-  namespace        = kubernetes_namespace.istio_system.metadata.0.name
+  namespace        = "istio-system"
   version          = "1.20.2"
   create_namespace = true
 }
@@ -28,7 +28,7 @@ resource "helm_release" "istiod" {
   repository       = local.istio_charts_url
   chart            = "istiod"
   name             = "istiod"
-  namespace        = kubernetes_namespace.istio_system.metadata.0.name
+  namespace        = "istio-system"
   create_namespace = true
   version          = "1.20.2"
   depends_on       = [helm_release.istio-base]
