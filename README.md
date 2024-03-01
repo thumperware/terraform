@@ -2,7 +2,7 @@
 
 To use terraform working with GCP you need:
 - Create a bucket with unique name universally that bucket name will be used in the backend.tf files.
-- Create Service account you need to set the account id of that account in service_account.tf in infrastructure.
+- Create Service account for terraform backend to work.
 - Download the key of the service account and you need to set it in the github action GCP_CREDENTIALS secrets and variables.
 - Grant the following permissions to created service account:
     * Service account admin
