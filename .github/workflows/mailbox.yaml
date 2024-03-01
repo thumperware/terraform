@@ -5,7 +5,7 @@ on:
     paths:
       - 'staging/wms/mailbox/**'
     branches:
-      - na
+      - master
   pull_request:
 
 jobs:
