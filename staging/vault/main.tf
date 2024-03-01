@@ -13,7 +13,7 @@ module "vault" {
   depends_on = [ google_project_service.gcp_apis ]
 }
 
-resource "google_project_service" "gcp_apis" {
+resource "google_project_service" "gcp_cloud_resource_manager_api" {
   for_each = toset([
     "cloudresourcemanager.googleapis.com",
     "storage.googleapis.com",
@@ -24,4 +24,17 @@ resource "google_project_service" "gcp_apis" {
   service = each.key
 
   disable_dependent_services = true
+}
+
+resource "google_project_service" "gcp_apis" {
+  for_each = toset([
+    "storage.googleapis.com",
+    "compute.googleapis.com",
+    "cloudkms.googleapis.com"])
+
+  project = var.project_id
+  service = each.key
+
+  disable_dependent_services = true
+  depends_on = [ google_project_service.gcp_cloud_resource_manager_api ]
 }
