@@ -3,6 +3,7 @@ locals {
 }
 
 resource "kubernetes_namespace" "istio-ingress" {
+  provider = helm.central
   metadata {
     name = "istio-ingress"
     labels = {
