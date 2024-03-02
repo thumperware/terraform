@@ -83,8 +83,8 @@ jobs:
       #   run: terraform -chdir=${{ inputs.tf_workspace }} apply -input=false -auto-approve
 
       ########## TO DESTROY ##########
-      - name: Terraform  Validate
-        run: terraform -chdir=${{ inputs.tf_workspace }} validate
+      # - name: Terraform  Validate
+      #   run: terraform -chdir=${{ inputs.tf_workspace }} validate
 
       - name: Terraform Destroy
         run: |
