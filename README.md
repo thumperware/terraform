@@ -1,6 +1,7 @@
 **Setup Terraform to Work with GCP**
 
 To use terraform working with GCP you need:
+- Enable the Service Usage API in gcp to let terraform be able to list services
 - Create a bucket with unique name universally that bucket name will be used in the backend.tf files.
 - Create Service account for terraform backend(state) to work.
 - Download the key of the service account and you need to set it in the github action GCP_CREDENTIALS secrets and variables.

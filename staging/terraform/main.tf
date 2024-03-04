@@ -12,7 +12,6 @@ resource "google_project_service" "gcp_serviceusage_api" {
 }
 resource "google_project_service" "gcp_apis" {
   for_each = toset([
-    "serviceusage.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "storage.googleapis.com",
     "artifactregistry.googleapis.com",
