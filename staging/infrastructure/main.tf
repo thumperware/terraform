@@ -5,7 +5,6 @@ provider "google" {
 
 data "google_client_config" "current" {}
 
-# Infrastructure
 provider "helm" {
   alias = "central"
   kubernetes {
