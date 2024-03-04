@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "thumperq-terraform-state"
+    bucket = "thumperq-tf-state"
     prefix = "staging/wms/mailbox"
   }
 }
