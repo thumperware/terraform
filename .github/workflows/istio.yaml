@@ -1,9 +1,9 @@
-name: 'Infrastructure pull request trigger'
+name: 'Istio pull request trigger'
 
 on:
   push:
     paths:
-      - 'staging/infrastructure/**'
+      - 'staging/infrastructure/istio/**'
     branches:
       - master
   pull_request:
@@ -12,6 +12,6 @@ jobs:
   the_job:
     uses: ./.github/workflows/base.yaml
     with:
-      tf_workspace: staging/infrastructure
+      tf_workspace: staging/infrastructure/istio
     secrets:
       gcp_credentials: ${{ vars.GCP_CREDENTIALS }}
