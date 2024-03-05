@@ -14,5 +14,6 @@ you need to run the projects in the following order:
 1. terraform
 2. vault
 3. infrastructure
-    * comment out the istio and nats and let gke and other being created.
-4. any services under wms, etc. in any order you like.
+4. istio
+5. nats
+6. any services under wms, etc. in any order you like.
