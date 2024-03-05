@@ -5,5 +5,10 @@ variable "project_id" {
 
 variable "region" {
   type        = string
-  description = "The Google project ID"
+  description = "The Region"
+}
+
+variable "k8s_cluster_endpoint" {
+  type        = string
+  description = "The k8s cluster endpoint"
 }
