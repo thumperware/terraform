@@ -3,7 +3,7 @@ name: 'Infrastructure pull request trigger'
 on:
   push:
     paths:
-      - 'staging/infrastructure/**'
+      - 'staging/infrastructure/gke/**'
     branches:
       - master
   pull_request:
@@ -12,6 +12,6 @@ jobs:
   the_job:
     uses: ./.github/workflows/base.yaml
     with:
-      tf_workspace: staging/infrastructure
+      tf_workspace: staging/infrastructure/gke
     secrets:
       gcp_credentials: ${{ vars.GCP_CREDENTIALS }}
