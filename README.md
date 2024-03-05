@@ -13,7 +13,7 @@ To use terraform working with GCP you need:
 you need to run the projects in the following order:
 1. terraform
 2. vault
-3. infrastructure
-4. istio
-5. nats
+3. infrastructure/gke
+4. infrastructure/istio
+5. infrastructure/nats
 6. any services under wms, etc. in any order you like.
