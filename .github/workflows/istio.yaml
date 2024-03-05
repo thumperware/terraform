@@ -5,7 +5,7 @@ on:
     paths:
       - 'staging/infrastructure/istio/**'
     branches:
-      - na
+      - master
   pull_request:
 
 jobs:
