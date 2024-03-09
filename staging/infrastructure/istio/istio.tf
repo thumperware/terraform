@@ -2,6 +2,8 @@ locals {
   istio_charts_url = "https://istio-release.storage.googleapis.com/charts"
 }
 
+data "google_client_config" "current" {}
+
 resource "kubernetes_namespace" "istio-ingress" {
   provider = kubernetes.central
   metadata {
