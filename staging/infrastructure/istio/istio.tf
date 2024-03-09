@@ -49,16 +49,18 @@ resource "google_compute_global_address" "istio-ingress-ipv4" {
   ip_version = "IPV4"
 }
 
-resource "kubernetes_patch" "istio-ingress-static-ip" {
-  kind       = "Service"
-  api_version = "v1"
-  name       = "istio-ingress"
-  namespace  = kubernetes_namespace.istio-ingress.metadata.0.name
-
-  patch = jsonencode({
-    spec = {
-      loadBalancerIP = google_compute_global_address.istio-ingress-ipv4.address
-    }
-  })
+resource "null_resource" "istio-load-balancer-ip-patch" {
+  provisioner "local-exec" {
+    command = <<EOH
+cat >/tmp/ca.crt <<EOF
+${base64decode(data.google_container_cluster.primary.master_auth.0.cluster_ca_certificate)}
+EOF
+  kubectl \
+  --server="https://${data.google_container_cluster.primary.endpoint}" \
+  --token="${data.google_client_config.default.access_token}" \
+  --certificate_authority=/tmp/ca.crt \
+  patch service istio-ingress --patch '{"spec":{"loadBalancerIP": "${google_compute_global_address.istio-ingress-ipv4.address}"}}' --namespace istio-ingress
+EOH
+  }
   depends_on = [ helm_release.istio-ingress, google_compute_global_address.istio-ingress-ipv4 ]
 }
