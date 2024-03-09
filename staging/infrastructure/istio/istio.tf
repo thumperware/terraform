@@ -33,9 +33,11 @@ resource "helm_release" "istiod" {
   depends_on       = [helm_release.istio-base]
 }
 
-resource "google_compute_global_address" "istio-ingressgateway-ipv4" {
-  name       = "istio-gke-ingress-ipv4"
+resource "google_compute_address" "istio-ingressgateway-ipv4" {
+  name       = "istio-ingressgateway-ipv4"
   ip_version = "IPV4"
+  region = var.region
+  address_type = "EXTERNAL"
 }
 
 resource "helm_release" "istio-ingressgateway" {
