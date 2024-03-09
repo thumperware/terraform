@@ -2,8 +2,6 @@ locals {
   istio_charts_url = "https://istio-release.storage.googleapis.com/charts"
 }
 
-data "google_client_config" "current" {}
-
 resource "kubernetes_namespace" "istio-ingress" {
   provider = kubernetes.central
   metadata {
@@ -59,7 +57,7 @@ ${base64decode(data.google_container_cluster.primary.master_auth.0.cluster_ca_ce
 EOF
   kubectl \
   --server="https://${data.google_container_cluster.primary.endpoint}" \
-  --token="${data.google_client_config.default.access_token}" \
+  --token="${data.google_client_config.current.access_token}" \
   --certificate_authority=/tmp/ca.crt \
   patch service istio-ingress --patch '{"spec":{"loadBalancerIP": "${google_compute_global_address.istio-ingress-ipv4.address}"}}' --namespace istio-ingress
 EOH
