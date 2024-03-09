@@ -47,7 +47,9 @@ resource "helm_release" "istio-ingress" {
   namespace  = kubernetes_namespace.istio-ingress.metadata.0.name
   version    = "1.20.2"
   depends_on = [helm_release.istiod, google_compute_global_address.istio-ingress-ipv4]
-  values = [ "service: loadBalancerIP: ${google_compute_global_address.istio-ingress-ipv4.address}" ]
+  values = [templatefile("values.yaml", {
+    ip = google_compute_global_address.istio-ingress-ipv4.address
+  })]
 }
 
 # resource "null_resource" "istio-load-balancer-ip-patch" {
