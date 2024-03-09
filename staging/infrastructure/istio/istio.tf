@@ -2,7 +2,7 @@ locals {
   istio_charts_url = "https://istio-release.storage.googleapis.com/charts"
 }
 
-resource "kubernetes_namespace" "istio-ingress" {
+resource "kubernetes_namespace" "istio-system" {
   provider = kubernetes.central
   metadata {
     name = "istio-system"
@@ -45,7 +45,7 @@ resource "helm_release" "istio-ingressgateway" {
   name       = "istio-ingressgateway"
   namespace  = kubernetes_namespace.istio-system.metadata.0.name
   version    = "1.20.2"
-  depends_on = [helm_release.istiod, google_compute_global_address.istio-ingress-ipv4]
+  depends_on = [helm_release.istiod, google_compute_global_address.istio-ingressgateway-ipv4]
   values = [templatefile("values.yaml", {
     ip = google_compute_global_address.istio-ingressgateway-ipv4.address
   })]
