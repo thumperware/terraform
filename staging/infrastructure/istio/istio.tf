@@ -64,3 +64,19 @@ EOH
   }
   depends_on = [ helm_release.istio-ingress, google_compute_global_address.istio-ingress-ipv4 ]
 }
+
+resource "null_resource" "istio-load-ingress-ip-patch" {
+  provisioner "local-exec" {
+    command = <<EOH
+cat >/tmp/ca.crt <<EOF
+${base64decode(data.google_container_cluster.primary.master_auth.0.cluster_ca_certificate)}
+EOF
+  kubectl \
+  --server="https://${data.google_container_cluster.primary.endpoint}" \
+  --token="${data.google_client_config.current.access_token}" \
+  --certificate_authority=/tmp/ca.crt \
+  patch service istio-ingress --patch '{"status":{"loadBalancer":{"ingress":[{"ip":"${google_compute_global_address.istio-ingress-ipv4.address}"}]}}}' --namespace istio-ingress
+EOH
+  }
+  depends_on = [ helm_release.istio-ingress, google_compute_global_address.istio-ingress-ipv4 ]
+}
