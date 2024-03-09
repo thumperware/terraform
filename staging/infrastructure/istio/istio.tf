@@ -59,7 +59,7 @@ EOF
   --server="https://${data.google_container_cluster.primary.endpoint}" \
   --token="${data.google_client_config.current.access_token}" \
   --certificate_authority=/tmp/ca.crt \
-  patch service istio-ingress --patch '{"spec":{"loadBalancerIP": "${google_compute_global_address.istio-ingress-ipv4.address}"}}' --namespace istio-ingress
+  patch service istio-ingress --patch '{"spec":{"loadBalancerIP": "${google_compute_global_address.istio-ingress-ipv4.address}"}, "status":{"loadBalancer":{"ingress":[{"ip":"${google_compute_global_address.istio-ingress-ipv4.address}"}]}}}' --namespace istio-ingress
 EOH
   }
   depends_on = [ helm_release.istio-ingress, google_compute_global_address.istio-ingress-ipv4 ]
