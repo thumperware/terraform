@@ -17,3 +17,6 @@ you need to run the projects in the following order:
 4. infrastructure/istio
 5. infrastructure/nats
 6. any services under wms, etc. in any order you like.
+
+to generate openssl for istio https support follow the following:
+https://cloud.google.com/load-balancing/docs/ssl-certificates/self-managed-certs
