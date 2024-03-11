@@ -3,6 +3,7 @@ locals {
 }
 
 resource "kubernetes_secret" "istio-gw-ssl-secret" {
+  provider = kubernetes.central
   metadata {
     name = "cacerts"
     namespace = kubernetes_namespace.istio-system.metadata.0.name
