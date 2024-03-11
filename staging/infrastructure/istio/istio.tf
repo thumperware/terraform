@@ -2,6 +2,20 @@ locals {
   istio_charts_url = "https://istio-release.storage.googleapis.com/charts"
 }
 
+resource "kubernetes_secret" "istio-gw-ssl-secret" {
+  metadata {
+    name = "cacerts"
+    namespace = kubernetes_namespace.istio-system.metadata.0.name
+  }
+
+  data = {
+    "tls.crt" = "${path.module}/certs/server.crt"
+    "tls.key" = "${path.module}/certs/server.key"
+  }
+
+  type = "Opaque"
+} 
+
 resource "kubernetes_namespace" "istio-system" {
   provider = kubernetes.central
   metadata {
