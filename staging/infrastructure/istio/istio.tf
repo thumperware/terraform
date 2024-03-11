@@ -10,8 +10,8 @@ resource "kubernetes_secret" "istio-gw-ssl-secret" {
   }
 
   data = {
-    "tls.crt" = "${path.module}/certs/server.crt"
-    "tls.key" = "${path.module}/certs/server.key"
+    "tls.crt" = "ssl_info/cert_file"
+    "tls.key" = "ssl_info/private_key"
   }
 
   type = "Opaque"
