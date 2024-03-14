@@ -7,12 +7,11 @@ on:
         required: true
         type: string
     secrets:
-      # This is holding the content of mailbox-gcp-token.json
       gcp_credentials:
         required: true
-      pg_username:
+      vault_address:
         required: false
-      pg_password:
+      vault_token:
         required: false
 
 jobs:
@@ -51,36 +50,17 @@ jobs:
       # Generates an execution plan for Terraform
       - name: Terraform Plan with db credentials
         env:
-          pg_username: ${{ secrets.pg_username }}
-          pg_password: ${{ secrets.pg_password }}
-        if: ${{ env.pg_username != null && env.pg_password != null }}
-        run: terraform -chdir=${{ inputs.tf_workspace }} plan -input=false -var="pg_username=${{ secrets.pg_username }}" -var="pg_password=${{ secrets.pg_password }}"
-
-      # Generates an execution plan for Terraform
-      - name: Terraform Plan without credentials
-        env:
-          pg_username: ${{ secrets.pg_username }}
-          pg_password: ${{ secrets.pg_password }}
-        if: ${{ env.pg_username == null && env.pg_password == null }}
-        run: terraform -chdir=${{ inputs.tf_workspace }} plan -input=false
+          vault_address: ${{ secrets.vault_address }}
+          vault_token: ${{ secrets.vault_token }}
+        run: terraform -chdir=${{ inputs.tf_workspace }} plan -input=false -var="vault_address=${{ secrets.vault_address }}" -var="vault_token=${{ secrets.vault_token }}"
 
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud".
       # See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
       - name: Terraform Apply with db credentials
         env:
-          pg_username: ${{ secrets.pg_username }}
-          pg_password: ${{ secrets.pg_password }}
-        if: ${{ env.pg_username != null && env.pg_password != null }}
-        run: terraform -chdir=${{ inputs.tf_workspace }} apply -input=false -var="pg_username=${{ secrets.pg_username }}" -var="pg_password=${{ secrets.pg_password }}" -auto-approve
-
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud".
-      # See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-      - name: Terraform Apply without db credentials
-        env:
-          pg_username: ${{ secrets.pg_username }}
-          pg_password: ${{ secrets.pg_password }}
-        if: ${{ env.pg_username == null && env.pg_password == null }}
-        run: terraform -chdir=${{ inputs.tf_workspace }} apply -input=false -auto-approve
+          vault_address: ${{ secrets.vault_address }}
+          vault_token: ${{ secrets.vault_token }}
+        run: terraform -chdir=${{ inputs.tf_workspace }} apply -input=false -var="vault_address=${{ secrets.vault_address }}" -var="vault_token=${{ secrets.vault_token }}" -auto-approve
 
       ########## TO DESTROY ##########
       # - name: Terraform  Validate

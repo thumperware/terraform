@@ -16,5 +16,5 @@ jobs:
     secrets:
       # This is holding the content of mailboc-gcp-token.json
       gcp_credentials: ${{ vars.GCP_CREDENTIALS }}
-      pg_username: ${{ vars.PG_USERNAME }}
-      pg_password: ${{ vars.PG_PASSWORD }}
+      vault_address: ${{ vars.VAULT_ADDR }}
+      vault_token: ${{ vars.VAULT_TOKEN }}
