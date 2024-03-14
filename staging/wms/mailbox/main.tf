@@ -6,6 +6,8 @@ provider "google" {
 provider "vault"{
   address = var.vault_address
   token  = var.vault_token
+  # Temporary workaround for skipping TLS verification just for testing
+  skip_tls_verify = true
 }
 
 data "vault_generic_secret" "mailbox-pg-username" {
