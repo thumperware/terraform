@@ -11,11 +11,11 @@ provider "vault"{
 }
 
 data "vault_generic_secret" "mailbox-pg-username" {
-  path = "secrets/staging/terraform/wms/mailbox/pg_username"
+  path = "secrets/staging/wms/mailbox/pg_username"
 }
 
 data "vault_generic_secret" "mailbox-pg-password" {
-  path = "secrets/staging/terraform/wms/mailbox/pg_password"
+  path = "secrets/staging/wms/mailbox/pg_password"
 }
 
 module "mailbox_srv"{
