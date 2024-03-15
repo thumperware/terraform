@@ -15,3 +15,5 @@ jobs:
       tf_workspace: staging/infrastructure/istio
     secrets:
       gcp_credentials: ${{ vars.GCP_CREDENTIALS }}
+      vault_address: ${{ vars.VAULT_ADDR }}
+      vault_token: ${{ vars.VAULT_TOKEN }}

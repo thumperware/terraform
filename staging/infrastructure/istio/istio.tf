@@ -9,9 +9,9 @@ resource "kubernetes_secret" "istio-gw-ssl-secret" {
     namespace = kubernetes_namespace.istio-system.metadata.0.name
   }
 
-  data = {
-    "tls.crt" = file("ssl_info/cert_file")
-    "tls.key" = file("ssl_info/private_key")
+  binary_data = {
+    "tls.crt" = data.vault_generic_secret.istio_tls_crt.data["value"]
+    "tls.key" = data.vault_generic_secret.istio_tls_key.data["value"]
   }
 
   type = "Opaque"
